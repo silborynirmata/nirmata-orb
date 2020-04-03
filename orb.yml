@@ -1,0 +1,236 @@
+version: 2.1
+description: |
+  Manages Kubernetes applications via the Nirmata API. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+
+commands:
+  add_command:
+    description: Adds an app to the catalog.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app. This must be unique!
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+      yaml_file:
+        description: Yaml file in your repo.
+        type: string
+    steps:
+    - run:
+        command: |-
+          ID=$(curl -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/applications/" -d "{\"name\": <<parameters.app_name>>,}"|jq .id| tr -d '"')
+          curl -k -H 'Content-Type: text/x-yaml' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/Application/$ID/import" --data-binary "@<<parameters.yaml_file>>"
+  update_yaml_command:
+    description: Updates the yaml of an existing app in the catalog.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app. This must be unique!
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+      yaml_file:
+        description: Yaml file in your repo.
+        type: string
+    steps:
+    - run:
+        command: |-
+          curl -k -H 'Content-Type: text/x-yaml' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/Application/$ID/import" --data-binary "@<<parameters.yaml_file>>"
+  add_deploy_command:
+    description: Adds an app to the catalog, and deploys it in the defined environment.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app. This must be unique!
+        type: string
+      env_name:
+        description: The Nirmata environment to deploy your app.
+        type: string
+      env_id:
+        description: The Nirmata environment ID to deploy your app.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+      yaml_file:
+        description: Yaml file in your repo.
+        type: string
+    steps:
+    - run:
+        command: |-
+          ID=$(curl -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/applications/" -d "{\"name\": <<parameters.app_name>>,}"|jq .id| tr -d '"')
+          curl -k -H 'Content-Type: text/x-yaml' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/Application/$ID/import" --data-binary "@<<parameters.yaml_file>>"
+          curl -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/Application/$ID/run" -d "{\"run\":\"<<parameters.app_name>>\",\"environmentId\":\"\<<parameters.yaml_file>>\",\"environment\":\"<<parameters.env_name>>\"}"
+  deploy_command:
+    description: Deploys an app from the catalog.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app in the catalog
+        type: string
+      app_name_deploy:
+        description: Name for the app to deploy
+        type: string
+      env_name:
+        description: The Nirmata environment to deploy your app.
+        type: string
+      env_id:
+        description: The Nirmata environment ID to deploy your app.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+    steps:
+    - run:
+        command: |-
+          ID=$(curl -s -k -H 'Content-Type: application/json' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" -X GET  "https://<<parameters.nirmata_server>>/catalog/api/Application/?query=%7B%22name%22%3A%20%22<<parameters.app_name>>%22%7D" |jq .[].id| tr -d '"')
+          curl -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/Application/$ID/run" -d "{\"run\":\"<<parameters.app_name_deploy>>\",\"environmentId\":\"\<<parameters.yaml_file>>\",\"environment\":\"<<parameters.env_name>>\"}"
+  delete_catalog_app_command:
+    description: Removes an App from the catalog.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+    steps:
+    - run:
+        command: |-
+          ID=$(curl -s -k -H 'Content-Type: application/json' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" -X GET  "https://<<parameters.nirmata_server>>/catalog/api/Application/?query=%7B%22name%22%3A%20%22<<parameters.app_name>>%22%7D" |jq .[].id| tr -d '"')
+          curl -X "DELETE" -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/catalog/api/applications/"$ID
+  delete_deployed_app_command:
+    description: Deletes a delpoyed app and removes it from the catalog. Will also work if the app only exists in the catalog.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      app_name:
+        description: Name of your app.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+    steps:
+    - run:
+        command: |-
+          ID=$(curl -s -k -H 'Content-Type: application/json' -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" -X GET  "https://<<parameters.nirmata_server>>/environments/api/applications/?query=%7B%22name%22%3A%20%22<<parameters.app_name>>%22%7D" |jq .[].id| tr -d '"'|tail -1)
+          curl -X "DELETE" -s -H "Accept: application/json" -H "Authorization: NIRMATA-API ${<< parameters.api_key >>}" "https://<<parameters.nirmata_server>>/environments/api/applications/"$ID
+examples:
+  add_example:
+    description: |
+      Create nginx application. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/add_command:
+              app_name: "circlecitest1"
+              nirmata_server: "nirmata.example.com"
+              yaml_file: "nginx.yml"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
+  update_yaml_example:
+    description: |
+      Update yaml of an existing application. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/update_yaml_command:
+              app_name: "circlecitest1"
+              nirmata_server: "nirmata.example.com"
+              yaml_file: "nginx.yml"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
+  add_deploy_example:
+    description: |
+      Create nginx application and run it. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/add_deploy_command:
+              app_name: "circlecitest2"
+              yaml_file: "nginx.yml"
+              nirmata_server: "nirmata.example.com"
+              env_id: "a9b072f3-e77c-4fc7-ae57-c7c9da89aeb0"
+              env_name: "prod-dev"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
+  delete_catalog_app_example:
+    description: |
+      Delete application from catalog. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/delete_catalog_app_command:
+              app_name: "circlecitest1"
+              nirmata_server: "nirmata.example.com"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
+  delete_deployed_app_example:
+    description: |
+      Delete delpoyed application. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/delete_deployed_app_command:
+              app_name: "circlecitest1"
+              nirmata_server: "nirmata.example.com"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
+  deploy_example:
+    description: |
+      Create nginx application in the catalog. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/deploy_command:
+              app_name: "circlecitest2"
+              app_name_deploy: "circlecitest2qa"
+              nirmata_server: "nirmata.example.com"
+              env_id: "a9b072f3-e77c-4fc7-ae57-c7c9da89aeb0"
+              env_name: "prod-dev"
+      orbs:
+        nirmata: nirmata/nirmata@1.1.2
+      version: 2.1
