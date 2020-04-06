@@ -25,11 +25,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl create <<parameters.app_name>> -c <<parameters.catalog>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>>
-          ./nctl apply <<parameters.app_name>> -c <<parameters.catalog>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
+          ./nctl catalog apps create <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   update_yaml_catalog_command:
     description: Updates the yaml of an existing app in a catlog.
     parameters:
@@ -52,10 +51,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl catalog apply <<parameters.app_name>> -c <<parameters.catalog>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
+          ./nctl catalog apps apply <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   update_yaml_env_command:
     description: Updates the yaml of an existing app in an environment.
     parameters:
@@ -81,10 +80,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl environments apply <<parameters.app_name>> -e <<parameters.env_name>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
+          ./nctl environments apps apply <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   deploy_command:
     description: Deploys an app from a catlog.
     parameters:
@@ -110,10 +109,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl environments apps create <<parameters.app_name>> -e <<parameters.env_name>> -a <<parameters.app_name>> -c <<parameters.catalog>> --token <<parameters.api_key>>
+          ./nctl environments apps create <<parameters.app_name>> -e <<parameters.env_name>> -a <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>}
   delete_catalog_app_command:
     description: Removes an App from a catlog.
     parameters:
@@ -133,10 +132,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>> --token <<parameters.api_key>>
+          ./nctl catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> 
   delete_deployed_app_command:
     description: Deletes a delpoyed app.
     parameters:
@@ -156,10 +155,10 @@ commands:
     steps:
     - run:
         command: |-
-          wget https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
-          unzip nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl environments apps delete <<parameters.app_name>> --token <<parameters.api_key>> --url https://<<parameters.nirmata_server>> -e <<parameters.env_name>>
+          ./nctl environments apps delete <<parameters.app_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -e <<parameters.env_name>>
 
 examples:
   add_catalog_app_example:
