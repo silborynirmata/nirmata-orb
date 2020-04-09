@@ -3,8 +3,8 @@ description: |
   Manages Kubernetes applications via the Nirmata API. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
 
 commands:
-  add_catlog_app_command:
-    description: Adds an app to a catlog.
+  add_catalog_app_command:
+    description: Adds an app to a catalog.
     parameters:
       api_key:
         description: Env variable storing your API key
@@ -25,12 +25,12 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
           ./nctl catalog apps create <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   update_yaml_catalog_command:
-    description: Updates the yaml of an existing app in a catlog.
+    description: Updates the yaml of an existing app in a catalog.
     parameters:
       api_key:
         description: Env variable storing your API key
@@ -51,7 +51,7 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
           ./nctl catalog apps apply <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
@@ -80,19 +80,19 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
           ./nctl environments apps apply <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   deploy_command:
-    description: Deploys an app from a catlog.
+    description: Deploys an app from a catalog.
     parameters:
       api_key:
         description: Env variable storing your API key
         type: env_var_name
         default: NIRMATA_API_KEY
       app_name:
-        description: Name of your app in a catlog
+        description: Name of your app in a catalog
         type: string
       app_name_deploy:
         description: Name for the app to deploy
@@ -109,12 +109,12 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
           ./nctl environments apps create <<parameters.app_name>> -e <<parameters.env_name>> -a <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>}
   delete_catalog_app_command:
-    description: Removes an App from a catlog.
+    description: Removes an App from a catalog.
     parameters:
       api_key:
         description: Env variable storing your API key
@@ -132,12 +132,12 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> 
+          ./nctl catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
   delete_deployed_app_command:
-    description: Deletes a delpoyed app.
+    description: Deletes a deployed app.
     parameters:
       api_key:
         description: Env variable storing your API key
@@ -155,11 +155,56 @@ commands:
     steps:
     - run:
         command: |-
-          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0-1-g742b468/nctl_2.9.0-1-g742b468_linux_64-bit.zip
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           unzip -o nctl.zip
           chmod 755 nctl
-          ./nctl environments apps delete <<parameters.app_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -e <<parameters.env_name>>
-
+          ./nctl environment apps delete <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
+  create_env_command:
+    description: Creates an Enviroment and a Namespace with the same name.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      env_name:
+        description: The Nirmata environment to deploy your app.
+        type: string
+      cluster_name:
+        description: The Kubernetes Cluster to create .
+        type: string
+      type:
+        description: The Nirmata Environmental Type Policy for the environment.  Sets CPU/Mem quotas.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+    steps:
+    - run:
+        command: |-
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          unzip -o nctl.zip
+          chmod 755 nctl
+          ./nctl environments create <<parameters.env_name>> --cluster <<parameters.cluster_name>> --type <<parameters.type>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
+  delete_env_command:
+    description: Deletes an Enviroment and a Namespace with the same name.
+    parameters:
+      api_key:
+        description: Env variable storing your API key
+        type: env_var_name
+        default: NIRMATA_API_KEY
+      env_name:
+        description: The Nirmata environment to deploy your app.
+        type: string
+      nirmata_server:
+        description: Nirmata server IP or DNS name.
+        type: string
+    steps:
+    - run:
+        command: |-
+          wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          unzip -o nctl.zip
+          chmod 755 nctl
+          ./nctl environments delete <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
 examples:
   add_catalog_app_example:
     description: |
@@ -170,13 +215,13 @@ examples:
           docker:
           - image: circleci/python
           steps:
-          - nirmata/add_catlog_app_command:
+          - nirmata/add_catalog_app_command:
               app_name: "circlecitest1"
               nirmata_server: "nirmata.example.com"
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
   update_yaml_catalog_example:
     description: |
@@ -193,7 +238,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
   update_yaml_env_example:
     description: |
@@ -210,7 +255,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
   delete_catalog_app_example:
     description: |
@@ -226,7 +271,7 @@ examples:
               nirmata_server: "nirmata.example.com"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
   delete_deployed_app_example:
     description: |
@@ -240,8 +285,9 @@ examples:
           - nirmata/delete_deployed_app_command:
               app_name: "circlecitest1"
               nirmata_server: "nirmata.example.com"
+              env_name: "prod-dev"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
   deploy_example:
     description: |
@@ -259,5 +305,37 @@ examples:
               env_name: "prod-dev"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.0
+        nirmata: nirmata/nirmata@2.9.1
+      version: 2.1
+  create_env_example:
+    description: |
+      Create an environment. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/create_env_command:
+              nirmata_server: "nirmata.example.com"
+              env_name: "prod-dev"
+              cluster_name: "dev"
+              type: "large"
+      orbs:
+        nirmata: nirmata/nirmata@2.9.1
+      version: 2.1
+  delete_env_example:
+    description: |
+      Delete an environment. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
+    usage:
+      jobs:
+        build:
+          docker:
+          - image: circleci/python
+          steps:
+          - nirmata/delete_env_command:
+              nirmata_server: "nirmata.example.com"
+              env_name: "prod-dev"
+      orbs:
+        nirmata: nirmata/nirmata@2.9.1
       version: 2.1
