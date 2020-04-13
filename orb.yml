@@ -2,6 +2,10 @@ version: 2.1
 description: |
   Manages Kubernetes applications via the Nirmata API. You must set a NIRMATA_API_KEY variable for your CircleCI project to authenticate with the Nirmata server.
 
+display:
+  home_url: https://www.nirmata.com/
+  source_url: https://github.com/silborynirmata/nirmata-orb/
+
 commands:
   add_catalog_app_command:
     description: Adds an app to a catalog.
