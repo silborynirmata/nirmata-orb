@@ -225,7 +225,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   update_yaml_catalog_example:
     description: |
@@ -242,7 +242,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   update_yaml_env_example:
     description: |
@@ -259,7 +259,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   delete_catalog_app_example:
     description: |
@@ -275,7 +275,7 @@ examples:
               nirmata_server: "nirmata.example.com"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   delete_deployed_app_example:
     description: |
@@ -291,7 +291,7 @@ examples:
               nirmata_server: "nirmata.example.com"
               env_name: "prod-dev"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   deploy_example:
     description: |
@@ -309,7 +309,7 @@ examples:
               env_name: "prod-dev"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   create_env_example:
     description: |
@@ -326,7 +326,7 @@ examples:
               cluster_name: "dev"
               type: "large"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
   delete_env_example:
     description: |
@@ -341,5 +341,5 @@ examples:
               nirmata_server: "nirmata.example.com"
               env_name: "prod-dev"
       orbs:
-        nirmata: nirmata/nirmata@2.9.1
+        nirmata: nirmata/nirmata@2.9.2
       version: 2.1
