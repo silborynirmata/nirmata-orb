@@ -35,7 +35,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalog apps create <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   update_yaml_catalog_command:
     description: Updates the yaml of an existing app in a catalog.
@@ -65,7 +65,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalog apps apply <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   update_yaml_env_command:
     description: Updates the yaml of an existing app in an environment.
@@ -98,7 +98,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments apps apply <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
   deploy_command:
     description: Deploys an app from a catalog.
@@ -131,7 +131,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments apps create <<parameters.app_name>> -e <<parameters.env_name>> -a <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>}
   delete_catalog_app_command:
     description: Removes an App from a catalog.
@@ -158,7 +158,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
   delete_deployed_app_command:
     description: Deletes a deployed app.
@@ -185,7 +185,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environment apps delete <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
   create_env_command:
     description: Creates an Enviroment and a Namespace with the same name.
@@ -215,7 +215,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments create <<parameters.env_name>> --cluster <<parameters.cluster_name>> --type <<parameters.type>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
   delete_env_command:
     description: Deletes an Enviroment and a Namespace with the same name.
@@ -239,7 +239,7 @@ commands:
         command: |-
           [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
           [ -f nctl ] || unzip -o nctl.zip
-          [ -x nctl ]  || chmod 500 nctl
+          [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments delete <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
 examples:
   add_catalog_app_example:
