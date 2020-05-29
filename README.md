@@ -13,7 +13,8 @@ The orb.yaml file contains everything you need to customize the orb for your own
 
 ## Using on sites with restricted internet
 - Access to this orb locally.
-- Insure that nctl is in your base dir.
+- Insure that nctl is in your base dir or set wget_arg to a local cached copy of the zip file.
+
 (Alternately just use nctl with run statements and not use the orb.)
   
 ## Compatiblity with prior releases

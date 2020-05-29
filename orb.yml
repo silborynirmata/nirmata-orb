@@ -30,10 +30,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>> 
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalog apps create <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
@@ -60,10 +64,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalog apps apply <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
@@ -93,10 +101,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments apps apply <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>> -f <<parameters.yaml_file>>
@@ -126,10 +138,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments apps create <<parameters.app_name>> -e <<parameters.env_name>> -a <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>}
@@ -153,10 +169,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> catalogs apps delete <<parameters.app_name>> -c <<parameters.catalog>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
@@ -180,10 +200,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environment apps delete <<parameters.app_name>> -e <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
@@ -210,10 +234,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments create <<parameters.env_name>> --cluster <<parameters.cluster_name>> --type <<parameters.type>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
@@ -234,10 +262,14 @@ commands:
         type: string
         description: Additional arguments for nctl example --insecure
         default: " "
+      wget_args:
+        type: string
+        description: Location of nctl binary.  You can use this to pass args (proxy?) to wget or download a different version.
+        default: " https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip "
     steps:
     - run:
         command: |-
-          [ -f nctl ] || wget -O nctl.zip https://nirmata-downloads.s3.us-east-2.amazonaws.com/nctl/nctl_2.9.0/nctl_2.9.0_linux_64-bit.zip
+          [ -f nctl ] || wget -O nctl.zip <<parameters.wget_args>>
           [ -f nctl ] || unzip -o nctl.zip
           [ -x nctl ] || chmod 500 nctl
           ./nctl <<parameters.nctl_args>> environments delete <<parameters.env_name>> --token ${<< parameters.api_key >>} --url https://<<parameters.nirmata_server>>
@@ -257,7 +289,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   update_yaml_catalog_example:
     description: |
@@ -274,7 +306,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   update_yaml_env_example:
     description: |
@@ -291,7 +323,7 @@ examples:
               yaml_file: "nginx.yml"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   delete_catalog_app_example:
     description: |
@@ -307,7 +339,7 @@ examples:
               nirmata_server: "nirmata.example.com"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   delete_deployed_app_example:
     description: |
@@ -323,7 +355,7 @@ examples:
               nirmata_server: "nirmata.example.com"
               env_name: "prod-dev"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   deploy_example:
     description: |
@@ -341,7 +373,7 @@ examples:
               env_name: "prod-dev"
               catalog : "circlecitest"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   create_env_example:
     description: |
@@ -358,7 +390,7 @@ examples:
               cluster_name: "dev"
               type: "large"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
   delete_env_example:
     description: |
@@ -373,5 +405,5 @@ examples:
               nirmata_server: "nirmata.example.com"
               env_name: "prod-dev"
       orbs:
-        nirmata: nirmata/nirmata@2.9.2
+        nirmata: nirmata/nirmata@2.9.8
       version: 2.1
